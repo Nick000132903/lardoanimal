@@ -1,32 +1,26 @@
-function copiarCupom(el) {
-  const codigo = el.textContent.trim();
-  navigator.clipboard.writeText(codigo).then(() => {
-    const feedback = document.getElementById('cupom-feedback');
-    feedback.style.opacity = '1';
-    setTimeout(() => { feedback.style.opacity = '0'; }, 2500);
-  }).catch(() => {
-    const tmp = document.createElement('textarea');
-    tmp.value = codigo;
-    document.body.appendChild(tmp);
-    tmp.select();
-    document.execCommand('copy');
-    document.body.removeChild(tmp);
-    const feedback = document.getElementById('cupom-feedback');
-    feedback.style.opacity = '1';
-    setTimeout(() => { feedback.style.opacity = '0'; }, 2500);
-  });
-}
+let filteredProducts = [...produtos];
+let currentCategory = 'todos';
+let searchTerm = '';
 
-function renderProdutos() {
+function renderProdutos(produtosParaExibir) {
   const grid = document.getElementById('product-grid');
+  const noResults = document.getElementById('no-results');
+  const resultCount = document.getElementById('result-count');
+
   grid.innerHTML = '';
 
-  if (!produtos.length) {
-    grid.innerHTML = '<p class="col-span-full text-center text-muted py-12">Nenhum produto cadastrado.</p>';
+  if (!produtosParaExibir.length) {
+    grid.classList.add('hidden');
+    noResults.classList.remove('hidden');
+    resultCount.textContent = 'Nenhum resultado encontrado';
     return;
   }
 
-  produtos.forEach(p => {
+  grid.classList.remove('hidden');
+  noResults.classList.add('hidden');
+  resultCount.textContent = `${produtosParaExibir.length} ${produtosParaExibir.length === 1 ? 'produto encontrado' : 'produtos encontrados'}`;
+
+  produtosParaExibir.forEach(p => {
     const card = document.createElement('article');
     card.className = 'product-card bg-white rounded-2xl border border-[#EDE8E0] shadow-[0_2px_12px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col';
 
@@ -36,6 +30,7 @@ function renderProdutos() {
           src="${p.img}"
           alt="${p.nome}"
           loading="lazy"
+          class="w-full h-full object-cover"
           onerror="this.src='https://via.placeholder.com/400x300/F2EDE6/AAAAAA?text=Imagem+indispon%C3%ADvel'"
         />
         ${p.badge ? `<span class="absolute top-3 left-3 bg-[#FF8C42] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">${p.badge}</span>` : ''}
@@ -66,6 +61,34 @@ function renderProdutos() {
   });
 }
 
+function filterProducts() {
+  filteredProducts = produtos.filter(p => {
+    const matchesCategory = currentCategory === 'todos' || p.categorias.includes(currentCategory);
+    const matchesSearch = searchTerm === '' ||
+      p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.descricao.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
+
+  renderProdutos(filteredProducts);
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    currentCategory = this.dataset.category;
+    filterProducts();
+  });
+});
+
+const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('input', function () {
+  searchTerm = this.value;
+  filterProducts();
+});
+
 initMenu();
 initBackToTop();
-renderProdutos();
+renderProdutos(produtos);

@@ -26,7 +26,10 @@ function renderProdutos() {
     return;
   }
 
-  produtos.forEach(p => {
+  // Mostra apenas os primeiros 6 produtos na home
+  const produtosDestaque = produtos.slice(0, 6);
+
+  produtosDestaque.forEach(p => {
     const card = document.createElement('article');
     card.className = 'product-card bg-white rounded-2xl border border-[#EDE8E0] shadow-[0_2px_12px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col';
 

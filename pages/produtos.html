@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Produtos — VareiShop</title>
-  <meta name="description" content="Encontre os melhores produtos de todas as categorias com os melhores preços. Eletrônicos, casa, moda e muito mais." />
-  <link rel="icon" href="../src/favicon.png" />
+  <meta name="description" content="Encontre os melhores produtos de todas as categorias com os melhores preços." />
+  <link rel="icon" href="../src/logo.png" />
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -50,8 +50,8 @@
     #back-to-top { opacity: 0; pointer-events: none; transition: opacity .25s ease; }
     #back-to-top.visible { opacity: 1; pointer-events: auto; }
 
-    .filter-btn { transition: all .2s ease; }
-    .filter-btn.active { background-color: #6366F1; color: white; border-color: #6366F1; }
+    .badge-btn { transition: all .2s ease; }
+    .badge-btn.active { background-color: #6366F1; color: white; border-color: #6366F1; }
   </style>
 </head>
 <body class="text-ink antialiased">
@@ -60,7 +60,7 @@
   <header class="sticky top-0 z-50 bg-white border-b border-bord shadow-sm">
     <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2 text-[#6366F1] font-extrabold text-xl tracking-tight select-none">
-        <img src="../src/favicon.png" alt="VareiShop logo" class="w-10 h-10"><span>VareiShop</span>
+        <img src="../src/logo.png" alt="VareiShop logo" class="w-40" />
       </a>
       <nav class="hidden md:flex items-center gap-8">
         <a href="index.html" class="text-sm font-semibold text-muted hover:text-[#6366F1] transition-colors">Home</a>
@@ -94,7 +94,7 @@
         Todos os <span class="text-[#6366F1]">produtos</span>
       </h1>
       <p class="text-muted text-base max-w-2xl mx-auto leading-relaxed">
-        Explore nossa seleção completa de produtos de todas as categorias. Filtros, busca e os melhores preços em um só lugar.
+        Explore nossa seleção completa de produtos com filtros inteligentes e os melhores preços.
       </p>
     </div>
   </section>
@@ -102,42 +102,70 @@
   <!-- FILTROS E BUSCA -->
   <section class="py-8 px-5 bg-white border-b border-bord sticky top-16 z-40">
     <div class="max-w-6xl mx-auto">
-      <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
-        <!-- Busca -->
-        <div class="w-full md:w-96">
-          <input
-            type="text"
-            id="search-input"
-            placeholder="🔍 Buscar produtos..."
-            class="w-full px-4 py-2.5 rounded-full border border-bord bg-canvas text-sm focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[#6366F1]/20 transition-all"
-          />
-        </div>
+      <!-- Busca -->
+      <div class="mb-6">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="🔍 Buscar produtos por nome..."
+          class="w-full px-5 py-3 rounded-full border border-bord bg-canvas text-sm focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[#6366F1]/20 transition-all"
+        />
+      </div>
 
-        <!-- Filtros de categoria -->
-        <div class="flex flex-wrap gap-2 justify-center">
-          <button class="filter-btn active px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="todos">
-            Todos
+      <!-- Filtros por Badge -->
+      <div class="mb-4">
+        <p class="text-xs font-bold text-muted uppercase tracking-wider mb-3">Filtrar por loja:</p>
+        <div class="flex flex-wrap gap-2">
+          <button class="badge-btn active px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-badge="todos">
+            Todas
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="eletrônicos">
-            📱 Eletrônicos
+          <button class="badge-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-badge="Shopee">
+            🛒 Shopee
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="moda">
-            👕 Moda
+          <button class="badge-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-badge="Amazon">
+            📦 Amazon
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="casa">
-            🏠 Casa
+          <button class="badge-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-badge="Mercado Livre">
+            💛 Mercado Livre
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="esportes">
-            ⚽ Esportes
+          <button class="badge-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-badge="Magalu">
+            💙 Magalu
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="beleza">
-            💄 Beleza
+        </div>
+      </div>
+
+      <!-- Filtros por Preço -->
+      <div class="flex flex-col sm:flex-row gap-4 items-center">
+        <p class="text-xs font-bold text-muted uppercase tracking-wider">Preço:</p>
+        <div class="flex gap-3 items-center">
+          <input
+            type="number"
+            id="price-min"
+            placeholder="Min"
+            class="w-24 px-3 py-2 rounded-lg border border-bord bg-canvas text-xs focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[#6366F1]/20"
+          />
+          <span class="text-muted">—</span>
+          <input
+            type="number"
+            id="price-max"
+            placeholder="Max"
+            class="w-24 px-3 py-2 rounded-lg border border-bord bg-canvas text-xs focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[#6366F1]/20"
+          />
+          <button
+            id="apply-price-filter"
+            class="px-4 py-2 bg-[#6366F1] hover:bg-[#4F46E5] text-white text-xs font-semibold rounded-lg transition-colors">
+            Aplicar
+          </button>
+          <button
+            id="clear-price-filter"
+            class="px-4 py-2 border border-bord hover:border-[#6366F1] text-xs font-semibold rounded-lg transition-colors">
+            Limpar
           </button>
         </div>
       </div>
 
       <!-- Contador de resultados -->
-      <div class="mt-4 text-center">
+      <div class="mt-5 text-center">
         <p id="result-count" class="text-xs text-muted font-medium"></p>
       </div>
     </div>
@@ -146,13 +174,30 @@
   <!-- GRID DE PRODUTOS -->
   <section class="py-12 px-5">
     <div class="max-w-6xl mx-auto">
-      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7 mb-12"></div>
 
       <!-- Mensagem quando não há resultados -->
       <div id="no-results" class="hidden text-center py-20">
         <div class="text-6xl mb-4">🔍</div>
         <h3 class="text-xl font-bold mb-2">Nenhum produto encontrado</h3>
-        <p class="text-muted text-sm">Tente buscar com outros termos ou filtros.</p>
+        <p class="text-muted text-sm">Tente buscar com outros termos ou ajuste os filtros.</p>
+      </div>
+
+      <!-- PAGINAÇÃO -->
+      <div id="pagination" class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
+        <button
+          id="prev-page"
+          class="px-5 py-2.5 bg-white hover:bg-[#6366F1] text-ink hover:text-white border border-bord hover:border-[#6366F1] rounded-full text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-ink">
+          ← Anterior
+        </button>
+
+        <div id="page-numbers" class="flex gap-2"></div>
+
+        <button
+          id="next-page"
+          class="px-5 py-2.5 bg-white hover:bg-[#6366F1] text-ink hover:text-white border border-bord hover:border-[#6366F1] rounded-full text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-ink">
+          Próximo →
+        </button>
       </div>
     </div>
   </section>
@@ -176,7 +221,7 @@
     class="fixed bottom-6 right-6 w-11 h-11 bg-[#6366F1] hover:bg-[#4F46E5] text-white rounded-full flex items-center justify-center text-lg shadow-[0_4px_16px_rgba(99,102,241,0.4)] hover:scale-110 transition-all z-50"
     aria-label="Voltar ao topo">↑</button>
 
+  <script src="../js/utils.js"></script>
   <script src="../js/produtos.js"></script>
-
 </body>
 </html>

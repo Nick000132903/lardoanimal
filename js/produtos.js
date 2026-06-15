@@ -1,6 +1,37 @@
-let filteredProducts = [...produtos];
+let produtos = [];
+let filteredProducts = [];
 let currentCategory = 'todos';
 let searchTerm = '';
+
+async function fetchProdutos() {
+  try {
+    const response = await fetch('/api/produtos');
+    const data = await response.json();
+
+    if (data.success) {
+      produtos = data.produtos.map(p => ({
+        ...p,
+        categorias: Array.isArray(p.categorias) ? p.categorias : JSON.parse(p.categorias || '[]')
+      }));
+      filteredProducts = [...produtos];
+      renderProdutos(filteredProducts);
+    } else {
+      console.error('Erro ao carregar produtos:', data.error);
+      showError();
+    }
+  } catch (error) {
+    console.error('Erro na requisição:', error);
+    showError();
+  }
+}
+
+function showError() {
+  const grid = document.getElementById('product-grid');
+  const noResults = document.getElementById('no-results');
+  grid.classList.add('hidden');
+  noResults.classList.remove('hidden');
+  document.getElementById('result-count').textContent = 'Erro ao carregar produtos';
+}
 
 function renderProdutos(produtosParaExibir) {
   const grid = document.getElementById('product-grid');
@@ -33,15 +64,15 @@ function renderProdutos(produtosParaExibir) {
           class="w-full h-full object-cover"
           onerror="this.src='https://via.placeholder.com/400x300/F2EDE6/AAAAAA?text=Imagem+indispon%C3%ADvel'"
         />
-        ${p.badge ? `<span class="absolute top-3 left-3 bg-[#FF8C42] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">${p.badge}</span>` : ''}
+        ${p.badge ? `<span class="absolute top-3 left-3 bg-[#6366F1] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">${p.badge}</span>` : ''}
       </div>
       <div class="flex flex-col flex-1 p-5">
         <h3 class="font-bold text-base leading-snug mb-2">${p.nome}</h3>
         <p class="text-[#6B7280] text-xs leading-relaxed flex-1 mb-4">${p.descricao}</p>
         <div class="flex items-center justify-between gap-3 mt-auto">
-          <span class="text-[#4CAF50] font-extrabold text-xl">${p.preco}</span>
+          <span class="text-[#10B981] font-extrabold text-xl">${p.preco}</span>
           <button
-            class="btn-comprar bg-[#FF8C42] hover:bg-[#E07030] text-white text-xs font-bold px-5 py-2.5 rounded-full shadow-[0_3px_12px_rgba(255,140,66,0.3)] hover:shadow-[0_5px_18px_rgba(255,140,66,0.4)] transition-all hover:-translate-y-0.5 whitespace-nowrap cursor-pointer"
+            class="btn-comprar bg-[#6366F1] hover:bg-[#4F46E5] text-white text-xs font-bold px-5 py-2.5 rounded-full shadow-[0_3px_12px_rgba(99,102,241,0.3)] hover:shadow-[0_5px_18px_rgba(99,102,241,0.4)] transition-all hover:-translate-y-0.5 whitespace-nowrap cursor-pointer"
             data-link="${p.link}"
             data-nome="${p.nome}"
           >Ver oferta →</button>
@@ -91,4 +122,4 @@ searchInput.addEventListener('input', function () {
 
 initMenu();
 initBackToTop();
-renderProdutos(produtos);
+fetchProdutos();

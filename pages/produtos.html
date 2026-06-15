@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Produtos — LarDoAnimal</title>
-  <meta name="description" content="Encontre os melhores produtos para cães e gatos com os melhores preços. Arranhadores, brinquedos, alimentação e muito mais." />
-  <link rel="icon" href="src/favicon.png" />
+  <title>Produtos — VareiShop</title>
+  <meta name="description" content="Encontre os melhores produtos de todas as categorias com os melhores preços. Eletrônicos, casa, moda e muito mais." />
+  <link rel="icon" href="../src/favicon.png" />
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,8 +14,8 @@
       theme: {
         extend: {
           colors: {
-            brand:  { DEFAULT: '#FF8C42', dark: '#E07030', light: '#FFF0E6' },
-            leaf:   { DEFAULT: '#4CAF50', dark: '#388E3C', light: '#E8F5E9' },
+            brand:  { DEFAULT: '#6366F1', dark: '#4F46E5', light: '#EEF2FF' },
+            leaf:   { DEFAULT: '#10B981', dark: '#059669', light: '#D1FAE5' },
             ink:    '#1C1C1C',
             canvas: '#F9F6F0',
             muted:  '#6B7280',
@@ -51,7 +51,7 @@
     #back-to-top.visible { opacity: 1; pointer-events: auto; }
 
     .filter-btn { transition: all .2s ease; }
-    .filter-btn.active { background-color: #FF8C42; color: white; border-color: #FF8C42; }
+    .filter-btn.active { background-color: #6366F1; color: white; border-color: #6366F1; }
   </style>
 </head>
 <body class="text-ink antialiased">
@@ -59,14 +59,14 @@
   <!-- NAVBAR -->
   <header class="sticky top-0 z-50 bg-white border-b border-bord shadow-sm">
     <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2 text-[#FF8C42] font-extrabold text-xl tracking-tight select-none">
-        <img src="src/favicon.png" alt="Lar do animal logo" class="w-10 h-10"><span>LarDoAnimal</span>
+      <a href="index.html" class="flex items-center gap-2 text-[#6366F1] font-extrabold text-xl tracking-tight select-none">
+        <img src="../src/favicon.png" alt="VareiShop logo" class="w-10 h-10"><span>VareiShop</span>
       </a>
       <nav class="hidden md:flex items-center gap-8">
-        <a href="index.html" class="text-sm font-semibold text-muted hover:text-[#FF8C42] transition-colors">Home</a>
-        <a href="produtos.html" class="text-sm font-semibold text-[#FF8C42] transition-colors">Produtos</a>
-        <a href="index.html#sobre" class="text-sm font-semibold text-muted hover:text-[#FF8C42] transition-colors">Sobre</a>
-        <a href="index.html#contato" class="text-sm font-semibold text-muted hover:text-[#FF8C42] transition-colors">Contato</a>
+        <a href="index.html" class="text-sm font-semibold text-muted hover:text-[#6366F1] transition-colors">Home</a>
+        <a href="produtos.html" class="text-sm font-semibold text-[#6366F1] transition-colors">Produtos</a>
+        <a href="index.html#sobre" class="text-sm font-semibold text-muted hover:text-[#6366F1] transition-colors">Sobre</a>
+        <a href="index.html#contato" class="text-sm font-semibold text-muted hover:text-[#6366F1] transition-colors">Contato</a>
       </nav>
       <button id="hamburger-btn" class="md:hidden flex flex-col gap-1.5 p-1.5" aria-label="Abrir menu" aria-expanded="false">
         <span class="block w-6 h-0.5 bg-ink rounded transition-all duration-300" id="hb-top"></span>
@@ -76,10 +76,10 @@
     </div>
     <div id="mobile-menu" class="md:hidden bg-white border-t border-bord px-5">
       <div class="flex flex-col py-4 gap-4">
-        <a href="index.html" class="font-semibold text-sm text-ink hover:text-[#FF8C42] transition-colors" onclick="closeMobileMenu()">Home</a>
-        <a href="produtos.html" class="font-semibold text-sm text-[#FF8C42] transition-colors" onclick="closeMobileMenu()">Produtos</a>
-        <a href="index.html#sobre" class="font-semibold text-sm text-ink hover:text-[#FF8C42] transition-colors" onclick="closeMobileMenu()">Sobre</a>
-        <a href="index.html#contato" class="font-semibold text-sm text-ink hover:text-[#FF8C42] transition-colors" onclick="closeMobileMenu()">Contato</a>
+        <a href="index.html" class="font-semibold text-sm text-ink hover:text-[#6366F1] transition-colors" onclick="closeMobileMenu()">Home</a>
+        <a href="produtos.html" class="font-semibold text-sm text-[#6366F1] transition-colors" onclick="closeMobileMenu()">Produtos</a>
+        <a href="index.html#sobre" class="font-semibold text-sm text-ink hover:text-[#6366F1] transition-colors" onclick="closeMobileMenu()">Sobre</a>
+        <a href="index.html#contato" class="font-semibold text-sm text-ink hover:text-[#6366F1] transition-colors" onclick="closeMobileMenu()">Contato</a>
       </div>
     </div>
   </header>
@@ -87,14 +87,14 @@
   <!-- HEADER DA PÁGINA -->
   <section class="bg-gradient-to-br from-[#FFF8F2] to-[#FFF0E0] border-b border-bord py-16 px-5">
     <div class="max-w-6xl mx-auto text-center">
-      <span class="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-[#FF8C42] bg-[#FF8C42]/10 px-4 py-1.5 rounded-full mb-4">
+      <span class="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest uppercase text-[#6366F1] bg-[#6366F1]/10 px-4 py-1.5 rounded-full mb-4">
         🛍️ Catálogo completo
       </span>
       <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-4">
-        Todos os <span class="text-[#FF8C42]">produtos</span>
+        Todos os <span class="text-[#6366F1]">produtos</span>
       </h1>
       <p class="text-muted text-base max-w-2xl mx-auto leading-relaxed">
-        Explore nossa seleção completa de produtos para cães e gatos. Filtros, busca e os melhores preços em um só lugar.
+        Explore nossa seleção completa de produtos de todas as categorias. Filtros, busca e os melhores preços em um só lugar.
       </p>
     </div>
   </section>
@@ -109,7 +109,7 @@
             type="text"
             id="search-input"
             placeholder="🔍 Buscar produtos..."
-            class="w-full px-4 py-2.5 rounded-full border border-bord bg-canvas text-sm focus:outline-none focus:border-[#FF8C42] focus:ring-2 focus:ring-[#FF8C42]/20 transition-all"
+            class="w-full px-4 py-2.5 rounded-full border border-bord bg-canvas text-sm focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[#6366F1]/20 transition-all"
           />
         </div>
 
@@ -118,20 +118,20 @@
           <button class="filter-btn active px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="todos">
             Todos
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="gatos">
-            🐱 Gatos
+          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="eletrônicos">
+            📱 Eletrônicos
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="cães">
-            🐶 Cães
+          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="moda">
+            👕 Moda
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="brinquedos">
-            🎾 Brinquedos
+          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="casa">
+            🏠 Casa
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="alimentação">
-            🍖 Alimentação
+          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="esportes">
+            ⚽ Esportes
           </button>
-          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="higiene">
-            🧼 Higiene
+          <button class="filter-btn px-4 py-2 rounded-full border border-bord bg-white text-xs font-semibold" data-category="beleza">
+            💄 Beleza
           </button>
         </div>
       </div>
@@ -160,23 +160,23 @@
   <!-- FOOTER -->
   <footer class="bg-[#1C1C1C] text-[#9CA3AF] py-12 px-5 mt-20">
     <div class="max-w-3xl mx-auto text-center">
-      <p class="text-[#FF8C42] font-extrabold text-lg mb-4">🐾 LarDoAnimal</p>
+      <p class="text-[#6366F1] font-extrabold text-lg mb-4">🛍️ VareiShop</p>
       <p class="text-xs leading-relaxed mb-5">
         Este site participa de <strong class="text-[#D1D5DB]">programas de afiliados de diversas lojas parceiras</strong>.
         Isso significa que podemos ganhar comissões sobre vendas realizadas através dos nossos links,
         sem qualquer custo adicional para você. Nossas recomendações são sempre honestas e baseadas
         na qualidade dos produtos.
       </p>
-      <p class="text-xs text-[#4B5563]">© 2026 LarDoAnimal — Todos os direitos reservados.</p>
+      <p class="text-xs text-[#4B5563]">© 2026 VareiShop — Todos os direitos reservados.</p>
     </div>
   </footer>
 
   <!-- BOTÃO VOLTAR AO TOPO -->
   <button id="back-to-top"
-    class="fixed bottom-6 right-6 w-11 h-11 bg-[#FF8C42] hover:bg-[#E07030] text-white rounded-full flex items-center justify-center text-lg shadow-[0_4px_16px_rgba(255,140,66,0.4)] hover:scale-110 transition-all z-50"
+    class="fixed bottom-6 right-6 w-11 h-11 bg-[#6366F1] hover:bg-[#4F46E5] text-white rounded-full flex items-center justify-center text-lg shadow-[0_4px_16px_rgba(99,102,241,0.4)] hover:scale-110 transition-all z-50"
     aria-label="Voltar ao topo">↑</button>
 
-  <script src="data.js"></script>
-  <script src="produtos.js"></script>
+  <script src="../js/produtos.js"></script>
+
 </body>
 </html>

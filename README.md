@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 # VareiShop
 
 Site de marketing de afiliado com produtos para pets e outras categorias. Os produtos são carregados dinamicamente de um banco de dados **PostgreSQL online** (Vercel Postgres).
 
 ## Tecnologias
+=======
+Vereishop é um site de marketing de afiliado multicategoria. A loja apresenta produtos selecionados das melhores lojas parceiras, cupons exclusivos e links de afiliado para diversas categorias como eletrônicos, moda, casa, beleza, pets e muito mais.
+>>>>>>> 64cef7ba2243dac88ded4fce3ebdc47634f2872c
 
 - HTML5 semântico
 - Tailwind CSS (via CDN)
@@ -11,6 +15,7 @@ Site de marketing de afiliado com produtos para pets e outras categorias. Os pro
 - Vercel (hospedagem e deploy)
 
 ## Funcionalidades
+<<<<<<< HEAD
 
 - Grid de produtos dinâmico carregado do banco PostgreSQL
 - Sistema de filtros (busca, loja, preço)
@@ -19,10 +24,19 @@ Site de marketing de afiliado com produtos para pets e outras categorias. Os pro
 - Seção especial para produtos de pets
 - Design responsivo (mobile-first)
 - Tema claro/escuro
+=======
+- Grid de produtos dinâmico via JavaScript
+- Seção de cupons em duas colunas (Petz e Shopee - em breve mais lojas)
+- Menu hambúrguer para mobile
+- Botão "voltar ao topo"
+>>>>>>> 64cef7ba2243dac88ded4fce3ebdc47634f2872c
 - Links de afiliado abrindo em nova aba
+- Sistema de busca e filtros (em desenvolvimento)
+- Paginação de produtos
 
 ## Configuração do Banco de Dados
 
+<<<<<<< HEAD
 ### 1. Criar banco Vercel Postgres
 
 1. Acesse [vercel.com](https://vercel.com) e faça login
@@ -210,3 +224,7 @@ Nick000132903
 ## Contato
 
 📧 nirabelon9r@gmail.com
+=======
+## Loja
+https://vereishop.vercel.app
+>>>>>>> 64cef7ba2243dac88ded4fce3ebdc47634f2872c

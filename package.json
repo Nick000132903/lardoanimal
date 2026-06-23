@@ -17,9 +17,10 @@
   "author": "Nick000132903",
   "license": "MIT",
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@vercel/postgres": "^0.10.0"
   },
   "devDependencies": {
-    "vercel": "^37.0.0"
+    "vercel": "^54.15.1"
   }
 }

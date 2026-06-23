@@ -45,13 +45,17 @@ async function loadProducts() {
     }
   } catch (error) {
     console.error('Erro ao carregar produtos:', error);
-    document.getElementById('product-grid').innerHTML = `
-      <div class="col-span-full text-center py-20">
-        <div class="text-6xl mb-4">⚠️</div>
-        <h3 class="text-xl font-bold mb-2">Erro ao carregar produtos</h3>
-        <p class="text-gray-600 dark:text-gray-400 text-sm">Tente recarregar a página.</p>
-      </div>
-    `;
+    const grid = document.getElementById('product-grid');
+    if (grid) {
+      grid.innerHTML = `
+        <div class="col-span-full text-center py-20">
+          <div class="text-6xl mb-4">⚠️</div>
+          <h3 class="text-xl font-bold mb-2">Erro ao carregar produtos</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Tente recarregar a página.</p>
+          <p class="text-gray-500 dark:text-gray-500 text-xs mt-2">${error.message}</p>
+        </div>
+      `;
+    }
   }
 }
 
@@ -62,10 +66,12 @@ async function loadProducts() {
 function setupEventListeners() {
   // Busca
   const searchInput = document.getElementById('search-input');
-  searchInput.addEventListener('input', (e) => {
-    filters.searchTerm = e.target.value.toLowerCase().trim();
-    applyFilters();
-  });
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      filters.searchTerm = e.target.value.toLowerCase().trim();
+      applyFilters();
+    });
+  }
 
   // Filtros de badge
   document.querySelectorAll('.badge-btn').forEach(btn => {
@@ -78,41 +84,55 @@ function setupEventListeners() {
   });
 
   // Filtros de preço
-  document.getElementById('apply-price-filter').addEventListener('click', () => {
-    const minInput = document.getElementById('price-min');
-    const maxInput = document.getElementById('price-max');
+  const applyPriceBtn = document.getElementById('apply-price-filter');
+  if (applyPriceBtn) {
+    applyPriceBtn.addEventListener('click', () => {
+      const minInput = document.getElementById('price-min');
+      const maxInput = document.getElementById('price-max');
 
-    filters.priceMin = minInput.value ? parseFloat(minInput.value) : null;
-    filters.priceMax = maxInput.value ? parseFloat(maxInput.value) : null;
+      filters.priceMin = minInput.value ? parseFloat(minInput.value) : null;
+      filters.priceMax = maxInput.value ? parseFloat(maxInput.value) : null;
 
-    applyFilters();
-  });
+      applyFilters();
+    });
+  }
 
-  document.getElementById('clear-price-filter').addEventListener('click', () => {
-    document.getElementById('price-min').value = '';
-    document.getElementById('price-max').value = '';
-    filters.priceMin = null;
-    filters.priceMax = null;
-    applyFilters();
-  });
+  const clearPriceBtn = document.getElementById('clear-price-filter');
+  if (clearPriceBtn) {
+    clearPriceBtn.addEventListener('click', () => {
+      const minInput = document.getElementById('price-min');
+      const maxInput = document.getElementById('price-max');
+      if (minInput) minInput.value = '';
+      if (maxInput) maxInput.value = '';
+      filters.priceMin = null;
+      filters.priceMax = null;
+      applyFilters();
+    });
+  }
 
   // Paginação
-  document.getElementById('prev-page').addEventListener('click', () => {
-    if (currentPage > 1) {
-      currentPage--;
-      renderProducts();
-      scrollToTop();
-    }
-  });
+  const prevBtn = document.getElementById('prev-page');
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderProducts();
+        scrollToTop();
+      }
+    });
+  }
 
-  document.getElementById('next-page').addEventListener('click', () => {
-    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-    if (currentPage < totalPages) {
-      currentPage++;
-      renderProducts();
-      scrollToTop();
-    }
-  });
+  const nextBtn = document.getElementById('next-page');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderProducts();
+        scrollToTop();
+      }
+    });
+  }
 }
 
 // ========================================
@@ -158,6 +178,7 @@ function applyFilters() {
 
 function extractPrice(precoString) {
   if (typeof precoString === 'number') return precoString;
+  if (!precoString) return 0;
 
   const match = precoString.match(/[\d.,]+/);
   if (match) {
@@ -174,15 +195,19 @@ function renderProducts() {
   const grid = document.getElementById('product-grid');
   const noResults = document.getElementById('no-results');
 
+  if (!grid) return;
+
   if (filteredProducts.length === 0) {
     grid.innerHTML = '';
-    noResults.classList.remove('hidden');
-    document.getElementById('pagination').classList.add('hidden');
+    if (noResults) noResults.classList.remove('hidden');
+    const pagination = document.getElementById('pagination');
+    if (pagination) pagination.classList.add('hidden');
     return;
   }
 
-  noResults.classList.add('hidden');
-  document.getElementById('pagination').classList.remove('hidden');
+  if (noResults) noResults.classList.add('hidden');
+  const pagination = document.getElementById('pagination');
+  if (pagination) pagination.classList.remove('hidden');
 
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
@@ -221,11 +246,11 @@ function createProductCard(product) {
     <article class="product-card bg-white dark:bg-dark-card rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden flex flex-col">
       <div class="relative overflow-hidden aspect-square bg-gray-100 dark:bg-gray-900">
         <img
-          src="${product.img}"
+          src="${product.img || 'https://placehold.co/400x400/8B5CF6/FFFFFF?text=VareiShop'}"
           alt="${product.nome}"
           class="w-full h-full object-cover"
           loading="lazy"
-          onerror="this.src='https://via.placeholder.com/400x400/1F1F1F/8B5CF6?text=VareiShop'"
+          onerror="this.src='https://placehold.co/400x400/8B5CF6/FFFFFF?text=VareiShop'"
         />
         ${product.badge ? `<span class="absolute top-3 left-3 ${badgeClass} border text-xs font-bold px-3 py-1 rounded-lg backdrop-blur-sm">${product.badge}</span>` : ''}
       </div>
@@ -234,7 +259,7 @@ function createProductCard(product) {
           ${product.nome}
         </h3>
         <p class="text-gray-600 dark:text-gray-400 text-xs mb-4 line-clamp-2 flex-grow">
-          ${product.descricao}
+          ${product.descricao || ''}
         </p>
         <div class="mt-auto">
           <p class="text-2xl font-extrabold text-primary mb-4">
@@ -242,7 +267,7 @@ function createProductCard(product) {
           </p>
           <button
             class="btn-comprar block w-full bg-primary hover:bg-primary-dark text-white text-center font-bold text-sm py-3 rounded-xl transition-all hover:scale-105"
-            data-link="${product.link}"
+            data-link="${product.link || '#'}"
             data-nome="${product.nome}">
             Ver oferta →
           </button>
@@ -262,10 +287,17 @@ function renderPagination() {
   const prevBtn = document.getElementById('prev-page');
   const nextBtn = document.getElementById('next-page');
 
-  prevBtn.disabled = currentPage === 1;
-  nextBtn.disabled = currentPage === totalPages;
+  if (!pageNumbersContainer) return;
+
+  if (prevBtn) prevBtn.disabled = currentPage === 1;
+  if (nextBtn) nextBtn.disabled = currentPage === totalPages;
 
   pageNumbersContainer.innerHTML = '';
+
+  if (totalPages <= 1) {
+    pageNumbersContainer.innerHTML = `<span class="text-sm text-gray-500">Página 1 de 1</span>`;
+    return;
+  }
 
   const maxVisiblePages = 5;
   let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
@@ -326,6 +358,8 @@ function updateResultCount() {
   const count = filteredProducts.length;
   const total = allProducts.length;
   const countEl = document.getElementById('result-count');
+
+  if (!countEl) return;
 
   if (count === total) {
     countEl.textContent = `Mostrando ${count} produtos`;

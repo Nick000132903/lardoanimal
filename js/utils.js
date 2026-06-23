@@ -1,9 +1,14 @@
+// ========================================
+// UTILS.JS - Funções Utilitárias
+// ========================================
+
+// ========================================
+// MENU MOBILE
+// ========================================
+
 function initMenu() {
   const hamburger = document.getElementById('hamburger-btn');
   const mobileMenu = document.getElementById('mobile-menu');
-  const hbTop = document.getElementById('hb-top');
-  const hbMid = document.getElementById('hb-mid');
-  const hbBot = document.getElementById('hb-bot');
 
   if (!hamburger || !mobileMenu) return;
 
@@ -11,33 +16,47 @@ function initMenu() {
     const isOpen = mobileMenu.classList.toggle('open');
     hamburger.setAttribute('aria-expanded', isOpen);
 
+    // Animar hamburger
+    const spans = hamburger.querySelectorAll('span');
     if (isOpen) {
-      hbTop.style.transform = 'rotate(45deg) translateY(8px)';
-      hbMid.style.opacity = '0';
-      hbBot.style.transform = 'rotate(-45deg) translateY(-8px)';
+      spans[0].style.transform = 'rotate(45deg) translateY(7px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translateY(-7px)';
     } else {
-      hbTop.style.transform = 'none';
-      hbMid.style.opacity = '1';
-      hbBot.style.transform = 'none';
+      spans[0].style.transform = 'none';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = 'none';
     }
+  });
+
+  // Fechar menu ao clicar em um link
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      closeMobileMenu();
+    });
   });
 }
 
 function closeMobileMenu() {
   const mobileMenu = document.getElementById('mobile-menu');
   const hamburger = document.getElementById('hamburger-btn');
-  const hbTop = document.getElementById('hb-top');
-  const hbMid = document.getElementById('hb-mid');
-  const hbBot = document.getElementById('hb-bot');
 
   if (mobileMenu) {
     mobileMenu.classList.remove('open');
     hamburger?.setAttribute('aria-expanded', 'false');
-    if (hbTop) hbTop.style.transform = 'none';
-    if (hbMid) hbMid.style.opacity = '1';
-    if (hbBot) hbBot.style.transform = 'none';
+    
+    const spans = hamburger?.querySelectorAll('span');
+    if (spans) {
+      spans[0].style.transform = 'none';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = 'none';
+    }
   }
 }
+
+// ========================================
+// BACK TO TOP
+// ========================================
 
 function initBackToTop() {
   const btn = document.getElementById('back-to-top');
@@ -46,8 +65,10 @@ function initBackToTop() {
   window.addEventListener('scroll', () => {
     if (window.scrollY > 300) {
       btn.classList.add('visible');
+      btn.style.display = 'flex';
     } else {
       btn.classList.remove('visible');
+      btn.style.display = 'none';
     }
   });
 
@@ -56,21 +77,49 @@ function initBackToTop() {
   });
 }
 
+// ========================================
+// COPIAR CUPOM
+// ========================================
+
 function copiarCupom(el) {
   const codigo = el.textContent.trim();
-  navigator.clipboard.writeText(codigo).then(() => {
-    const feedback = document.getElementById('cupom-feedback');
-    feedback.style.opacity = '1';
-    setTimeout(() => { feedback.style.opacity = '0'; }, 2500);
-  }).catch(() => {
-    const tmp = document.createElement('textarea');
-    tmp.value = codigo;
-    document.body.appendChild(tmp);
-    tmp.select();
-    document.execCommand('copy');
-    document.body.removeChild(tmp);
-    const feedback = document.getElementById('cupom-feedback');
-    feedback.style.opacity = '1';
-    setTimeout(() => { feedback.style.opacity = '0'; }, 2500);
-  });
+  
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(codigo).then(() => {
+      mostrarFeedback();
+    }).catch(() => {
+      fallbackCopiar(codigo);
+    });
+  } else {
+    fallbackCopiar(codigo);
+  }
 }
+
+function fallbackCopiar(codigo) {
+  const tmp = document.createElement('textarea');
+  tmp.value = codigo;
+  tmp.style.position = 'fixed';
+  tmp.style.opacity = '0';
+  document.body.appendChild(tmp);
+  tmp.select();
+  document.execCommand('copy');
+  document.body.removeChild(tmp);
+  mostrarFeedback();
+}
+
+function mostrarFeedback() {
+  const feedback = document.getElementById('cupom-feedback');
+  if (feedback) {
+    feedback.style.opacity = '1';
+    setTimeout(() => { feedback.style.opacity = '0'; }, 2500);
+  }
+}
+
+// ========================================
+// INICIALIZAR - EXECUTA TODAS AS FUNÇÕES
+// ========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  initMenu();
+  initBackToTop();
+});
